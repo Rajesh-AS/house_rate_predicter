@@ -45,3 +45,5 @@ if st.button("Predict"):
                             has_basement]])
     prediction = model.predict(input_data)
     st.success(f"🏷 Estimated Price: ₹{int(prediction[0]):,}")
+import os
+st.write("Files in models folder:", os.listdir("models"))
