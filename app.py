@@ -1,7 +1,10 @@
 import streamlit as st
+import pandas as pd
 import numpy as np
 import joblib
 import os
+
+
 
 st.set_page_config(page_title="House Price Prediction", page_icon="🏠")
 
@@ -39,11 +42,28 @@ has_fireplace = st.selectbox("Fireplace", [0, 1])
 has_basement = st.selectbox("Basement", [0, 1])
 
 if st.button("Predict"):
-    input_data = np.array([[bedrooms, bathrooms, sqft, lot_size, age,
-                            year_built, garage, location, house_type,
-                            condition, school_rating, has_pool, has_fireplace,
-                            has_basement]])
+    # Create DataFrame with EXACT column names
+    input_data = pd.DataFrame({
+        "bedrooms": [bedrooms],
+        "bathrooms": [bathrooms],
+        "sqft": [sqft],
+        "lot_size": [lot_size],
+        "age": [age],
+        "year_built": [year_built],
+        "garage": [garage],
+        "condition": [condition],
+        "school_rating": [school_rating],
+        "has_pool": [has_pool],
+        "has_fireplace": [has_fireplace],
+        "has_basement": [has_basement],
+        "location": [location],
+        "house_type": [house_type],
+    })
+
+    # DEBUG (remove later)
+    st.write("Input DataFrame:")
+    st.write(input_data)
+
     prediction = model.predict(input_data)
+
     st.success(f"🏷 Estimated Price: ₹{int(prediction[0]):,}")
-import os
-st.write("Files in models folder:", os.listdir("models"))
